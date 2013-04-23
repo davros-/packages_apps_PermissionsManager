@@ -16,6 +16,7 @@
 
 package org.chameleonos.permissionsmanager.activity;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
 import android.content.Context;
@@ -66,6 +67,8 @@ public class PermissionManagerActivity extends ExpandableListActivity
         elv.setDividerHeight(0);
         elv.setOnItemLongClickListener(this);
         elv.setOnGroupClickListener(this);
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -77,6 +80,18 @@ public class PermissionManagerActivity extends ExpandableListActivity
         mEnabled.setChecked(Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.ENABLE_PERMISSIONS_MANAGEMENT, 0) == 1);
         mEnabled.setOnCheckedChangeListener(this);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
         return true;
     }
 
